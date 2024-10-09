@@ -1,0 +1,15 @@
+- stage: Update
+  displayName: Update
+  jobs:
+  - job: Update
+    displayName: Update
+    steps:
+    - script: |
+        sudo apt/yum update
+        sudo apt/yum install dos2unix -y
+        dos2unix <path_of_script.sh_file>
+      displayName: 'Install pkgs'
+    - task: ShellScript@2
+      inputs:  
+        scriptPath: 'script/k8sManifest.sh'
+        args: 'vote $(imageRepository) $(tag)'
